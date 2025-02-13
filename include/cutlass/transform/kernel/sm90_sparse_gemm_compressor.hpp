@@ -46,7 +46,7 @@
 #include "cutlass/fast_math.h"             // cutlass::ceil_div, cutlass::round_up
 #include "cutlass/kernel_hardware_info.h"  // cutlass::KernelHardwareInfo
 #include "cutlass/numeric_size.h"          // cutlass::bits_to_bytes
-#include "cutlass/numeric_types_traits.h"  // cutlass::has_negative_zero_v
+#include "cutlass/numeric_type_traits.h"   // cutlass::has_negative_zero_v
 #include "cutlass/cuda_host_adapter.hpp"   // cutlass::CudaHostAdapter
 
 namespace cutlass::transform::kernel {
