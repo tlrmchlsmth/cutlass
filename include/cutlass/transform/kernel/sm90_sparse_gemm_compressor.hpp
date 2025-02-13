@@ -378,7 +378,7 @@ private:
 
     // Construct a sign bit mask for handling negative zeros 
     ElementAMmaRawUnit sign_mask = { 0 };
-    ElementAUint one_sign_mask = ~(1 << (cute::sizeof_bits_v<ElementA> - 1));
+    ElementAMmaRawUnit one_sign_mask = ~(ElementAMmaRawUnit{ 1 } << (cute::sizeof_bits_v<ElementA> - 1));
     for(int i = 0; i < sizeof(ElementAMmaRawUnit) / sizeof(ElementAUint); ++i) {
       sign_mask |= one_sign_mask << (i * cute::sizeof_bits_v<ElementA>);
     }
