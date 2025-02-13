@@ -376,6 +376,14 @@ private:
       copy_vec_pred<true, LayoutATag>(cAgA, cAsA, threadIdx_X, GemmM_within_Cta, GemmK_within_Cta);
     }
 
+    // Construct a sign bit mask for handling negative zeros 
+    ElementAMmaRawUnit sign_mask = { 0 };
+    int bits_per_element = 8 * sizeof(ElementAUnit)
+    ElementAUnit one_sign_mask = ~(1 << bits_per_element);
+    for(int i = 0; i < sizeof(ElementAMmaRawUnit) / sizeof(ElementAUnit); ++i) {
+      sign_mask |= one_sign_mask << (i * bits_per_element);
+    }
+
     // * Compress
     // cACsAC is always row major order
     // TensorEAtomM threads perform the compression, each thread compress one row
@@ -401,7 +409,7 @@ private:
           CUTE_UNROLL
           for (int elt_log_idx = 0; elt_log_idx < OneChunkSizeA{}; ++elt_log_idx) {
             ElementAMmaRawUnit elem_A = tAsA[elt_log_idx];
-            if ( elem_A != ElementAMmaRawUnit{0.0f} && elem_A != ElementAMmaRawUnit{-0.0f} ) {
+            if ( elem_A & sign_mask != ElementAMmaRawUnit{0} ) {
               non_zero_elt_log_idx[non_zero_cnt] = elt_log_idx;
               tACsAC[non_zero_cnt] = elem_A;
               non_zero_cnt++;
