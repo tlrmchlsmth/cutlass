@@ -378,10 +378,9 @@ private:
 
     // Construct a sign bit mask for handling negative zeros 
     ElementAMmaRawUnit sign_mask = { 0 };
-    int bits_per_element = 8 * sizeof(ElementAUnit)
-    ElementAUnit one_sign_mask = ~(1 << bits_per_element);
+    ElementAUint one_sign_mask = ~(1 << cute::sizeof_bits_v(ElementA));
     for(int i = 0; i < sizeof(ElementAMmaRawUnit) / sizeof(ElementAUnit); ++i) {
-      sign_mask |= one_sign_mask << (i * bits_per_element);
+      sign_mask |= one_sign_mask << (i * cute::sizeof_bits_v(ElementA));
     }
 
     // * Compress
