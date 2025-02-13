@@ -401,7 +401,7 @@ private:
           CUTE_UNROLL
           for (int elt_log_idx = 0; elt_log_idx < OneChunkSizeA{}; ++elt_log_idx) {
             ElementAMmaRawUnit elem_A = tAsA[elt_log_idx];
-            if ( elem_A != ElementAMmaRawUnit{0} ) {
+            if ( elem_A != ElementAMmaRawUnit{0.0f} && elem_A != ElementAMmaRawUnit{-0.0f} ) {
               non_zero_elt_log_idx[non_zero_cnt] = elt_log_idx;
               tACsAC[non_zero_cnt] = elem_A;
               non_zero_cnt++;
